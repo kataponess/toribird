@@ -1,0 +1,26 @@
+@media (max-width: 576px){
+h2{
+	font-size: 30px;
+}
+}
+
+label{
+  font-size: 20px;
+}
+
+.buttons{
+  margin: 10px;
+}
+
+.inner{
+  border: 3px dashed black;
+  border-radius: 10px;
+}
+
+button{
+  font-family: 'Righteous', cursive, 'M PLUS Rounded 1c', sans-serif, '游ゴシック Medium', '游ゴシック体', 'Yu Gothic Medium', YuGothic, 'ヒラギノ角ゴ ProN', 'Hiragino Kaku Gothic ProN', 'メイリオ', Meiryo, 'ＭＳ Ｐゴシック', 'MS PGothic', sans-serif !important;
+}
+
+.login{
+  font-size: 30px;
+}

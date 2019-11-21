@@ -1,0 +1,233 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Support\Facades\File;
+
+class GetParrotsController extends Controller
+{
+	private function findParrot($html, $pref_id, $zoo_name, $before_word, $after_word)
+	{
+		$parrot_types = ['インコ', 'オウム', 'ヨウム', 'バタン'];
+		$parrot_name = '';
+		\App\Zooname::insert(['prefecture_id' => $pref_id, 'zooname' => $zoo_name]);
+
+		foreach ($parrot_types as $parrot_type) {
+			$sentence = $html;
+
+			for ($i = 0;; $i++) {
+				if (mb_strpos($sentence, $parrot_type) === false) {
+					break;
+				}
+
+				$position = mb_strpos($sentence, $parrot_type);
+
+				for ($j = -1; mb_substr($sentence, $position + $j, 1) != $before_word; $j--) {
+					$parrot_name = mb_substr($sentence, $position + $j, 1) . $parrot_name;
+				}
+
+				if (File::exists("storage/img/" . $parrot_name . $parrot_type . ".jpg")) {
+					$imagePath = "storage/img/" . $parrot_name . $parrot_type . ".jpg";
+				} else {
+					$imagePath = "storage/img/noimage.png";
+				}
+
+				if (
+					$parrot_name . $parrot_type != $parrot_type &&
+					preg_match("/^[ァ-ヾ]+$/u", $parrot_name . $parrot_type)
+				) {
+
+					if (!\App\Parrotname::where('parrotname', $parrot_name . $parrot_type)->exists()) {
+						\App\Parrotname::insert([
+							'parrotname' => $parrot_name . $parrot_type,
+						]);
+					}
+
+					\App\Parrot::insert([
+						'zooname_id' => \App\Zooname::where('zooname', $zoo_name)->value('id'),
+						'parrotname_id' => \App\Parrotname::where('parrotname', $parrot_name . $parrot_type)->value('parrotname'),
+						'path' => $imagePath
+					]);
+				}
+
+				if ($parrot_name . $parrot_type != $parrot_type) {
+					$this->getOverview($parrot_name . $parrot_type);
+				}
+
+				$parrot_name = '';
+
+				$sentence = mb_substr($sentence, $position);
+				$sentence = mb_substr($sentence, mb_strpos($sentence, $after_word) + 1);
+			}
+		}
+	}
+
+	private function getOverview($name)
+	{
+		if (!\App\Overview::where('parrotname', $name)->exists()) {
+			if ($html = @file_get_contents("https://ja.wikipedia.org/wiki/" . $name)) {
+				if (strpos($html, '概要')) {
+					$html = mb_substr($html, mb_strpos($html, "概要"));
+					$html = mb_substr($html, mb_strpos($html, "<p>") + 3);
+					$html = mb_substr($html, 0, mb_strpos($html, '<h'));
+					$html = strip_tags($html);
+					\App\Overview::insert(['parrotname' => $name, 'overview' => $html]);
+				} else if (strpos($html, '<div id="toc')) {
+					$html = mb_substr($html, mb_strpos($html, "mw-content-text"));
+					$html = mb_substr($html, mb_strpos($html, "/table"));
+					$html = mb_substr($html, mb_strpos($html, "<p>") + 3);
+					$html = mb_substr($html, 0, mb_strpos($html, '<div id="toc'));
+					$html = strip_tags($html);
+					\App\Overview::insert(['parrotname' => $name, 'overview' => $html]);
+				} else {
+					$html = mb_substr($html, mb_strpos($html, "mw-content-text"));
+					$html = mb_substr($html, mb_strpos($html, "/table"));
+					$html = mb_substr($html, mb_strpos($html, "<p>") + 3);
+					$html = mb_substr($html, 0, mb_strpos($html, '<h'));
+					$html = strip_tags($html);
+					\App\Overview::insert(['parrotname' => $name, 'overview' => $html]);
+				}
+			}
+		}
+	}
+
+	public function getInformation()
+	{
+		// DB初期化
+		\App\Parrot::truncate();
+		\App\Zooname::truncate();
+		\App\Overview::truncate();
+
+		/*---------- おびひろ動物園 ----------*/
+		$html = file_get_contents("https://www.city.obihiro.hokkaido.jp/zoo/animal/bird_list.html");
+		$pref_id = \App\Prefecture::where('prefecturename', '北海道')->value('id');
+		$zoo_name = 'おびひろ動物園';
+		$before_word = '>';
+		$after_word = 'li>';
+
+		$this->findParrot($html, $pref_id, $zoo_name, $before_word, $after_word);
+
+		/*---------- 釧路市動物園 ----------*/
+		$html = file_get_contents("https://www.city.kushiro.lg.jp/zoo/shoukai/0001.html");
+		$pref_id = \App\Prefecture::where('prefecturename', '北海道')->value('id');
+		$zoo_name = '釧路市動物園';
+		$before_word = '"';
+		$after_word = 'の';
+
+		$this->findParrot($html, $pref_id, $zoo_name, $before_word, $after_word);
+
+		/*---------- 札幌市円山動物園 ----------*/
+		$html = file_get_contents("https://www.city.sapporo.jp/zoo/doubutsu/index50.html");
+		$pref_id = \App\Prefecture::where('prefecturename', '北海道')->value('id');
+		$zoo_name = '札幌市円山動物園';
+		$before_word = '>';
+		$after_word = '<';
+
+		$this->findParrot($html, $pref_id, $zoo_name, $before_word, $after_word);
+
+		/*---------- ノースサファリサッポロ ----------*/
+		$html = file_get_contents("https://www.north-safari.com/animals/animal_nss");
+		$pref_id = \App\Prefecture::where('prefecturename', '北海道')->value('id');
+		$zoo_name = 'ノースサファリサッポロ';
+		$before_word = '"';
+		$after_word = '"';
+
+		$this->findParrot($html, $pref_id, $zoo_name, $before_word, $after_word);
+
+		/*---------- 岩手サファリパーク ----------*/
+		$html = file_get_contents("https://www.iwate-safari.jp/animal");
+		$pref_id = \App\Prefecture::where('prefecturename', '岩手県')->value('id');
+		$zoo_name = '岩手サファリパーク';
+		$before_word = '"';
+		$after_word = '"';
+
+		$this->findParrot($html, $pref_id, $zoo_name, $before_word, $after_word);
+
+		/*---------- 八木山動物公園 現在いない2019/9/24 ----------*/
+		// $html = file_get_contents("https://www.city.sendai.jp/zoo/dobutsu/chorui/omu.html");
+		// $pref_id = \App\Prefecture::where('prefecturename', '宮城県')->value('id');
+		// $zoo_name = '八木山動物公園';
+		// $before_word = '>';
+		// $after_word = '<';
+
+		// $this->findParrot($html, $pref_id, $zoo_name, $before_word, $after_word);
+
+		/*---------- 秋田市大森山動物園 ----------*/
+		$html = file_get_contents("https://www.city.akita.lg.jp/zoo/information/1003682/1005303/index.html");
+		$pref_id = \App\Prefecture::where('prefecturename', '秋田県')->value('id');
+		$zoo_name = '秋田市大森山動物園';
+		$before_word = '>';
+		$after_word = '<';
+
+		$this->findParrot($html, $pref_id, $zoo_name, $before_word, $after_word);
+
+		/*---------- 那須ワールドモンキーパーク ----------*/
+		$html = file_get_contents("https://www.nasumonkey.com/book/");
+		$pref_id = \App\Prefecture::where('prefecturename', '群馬県')->value('id');
+		$zoo_name = '那須ワールドモンキーパーク';
+		$before_word = '>';
+		$after_word = '<';
+
+		$this->findParrot($html, $pref_id, $zoo_name, $before_word, $after_word);
+
+
+
+		/*---------- 野毛山動物園 ----------*/
+		$html = file_get_contents("http://www.hama-midorinokyokai.or.jp/zoo/nogeyama/animal/");
+		$pref_id = \App\Prefecture::where('prefecturename', '東京都')->value('id');
+		$zoo_name = '野毛山動物園';
+		$before_word = '"';
+		$after_word = 'li>';
+
+		$this->findParrot($html, $pref_id, $zoo_name, $before_word, $after_word);
+
+		/*---------- 足立区生物園 ----------*/
+		$html = file_get_contents("http://animalchain.site/zoo/34");
+		$pref_id = \App\Prefecture::where('prefecturename', '東京都')->value('id');
+		$zoo_name = '足立区生物園';
+		$before_word = '>';
+		$after_word = 'li>';
+
+		$this->findParrot($html, $pref_id, $zoo_name, $before_word, $after_word);
+
+		// /*---------- 恩賜上野動物園 ----------*/
+		$html = file_get_contents("http://animalchain.site/zoo/29");
+		$pref_id = \App\Prefecture::where('prefecturename', '東京都')->value('id');
+		$zoo_name = '恩賜上野動物園';
+		$before_word = '>';
+		$after_word = 'li>';
+
+		$this->findParrot($html, $pref_id, $zoo_name, $before_word, $after_word);
+
+		/*---------- 江戸川区自然動物園 ----------*/
+		$html = file_get_contents("https://www.edogawa-kankyozaidan.jp/zoo/introduction/");
+		$pref_id = \App\Prefecture::where('prefecturename', '東京都')->value('id');
+		$zoo_name = '江戸川区自然動物園';
+		$before_word = '"';
+		$after_word = 'iv>';
+
+		$this->findParrot($html, $pref_id, $zoo_name, $before_word, $after_word);
+
+		/*---------- 多摩動物公園 ----------*/
+		$html = file_get_contents("http://animalchain.site/zoo/13");
+		$pref_id = \App\Prefecture::where('prefecturename', '東京都')->value('id');
+		$zoo_name = '多摩動物公園';
+		$before_word = '>';
+		$after_word = 'li>';
+
+		$this->findParrot($html, $pref_id, $zoo_name, $before_word, $after_word);
+
+		/*---------- よこはま動物園ズーラシア ----------*/
+		$html = file_get_contents("http://www.hama-midorinokyokai.or.jp/zoo/zoorasia/animal/");
+		$pref_id = \App\Prefecture::where('prefecturename', '神奈川県')->value('id');
+		$zoo_name = 'よこはま動物園ズーラシア';
+		$before_word = '"';
+		$after_word = 'li>';
+
+		$this->findParrot($html, $pref_id, $zoo_name, $before_word, $after_word);
+
+
+
+		return back();
+	}
+}

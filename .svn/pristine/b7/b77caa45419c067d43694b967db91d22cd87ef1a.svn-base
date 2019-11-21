@@ -1,0 +1,60 @@
+@extends('layouts.index_master')
+
+@section('main')
+<div class="main">
+  <div class="container">
+    <div class="collection z-depth-4">
+      <div class="collection-item">
+        <a class="btn" href="{{ route('posts.edit', ['post' => $post]) }}">
+          編集する
+        </a>
+
+        <form method="POST" action="{{ route('posts.destroy', ['post' => $post]) }}">
+          @csrf
+          @method('DELETE')
+          <button class="btn btn-danger">削除する</button>
+        </form>
+      </div>
+
+      <div class="collection-item">
+        <p class="">{{ $post->title }}</p>
+        <p class="">{!! nl2br(e($post->body)) !!}</p>
+      </div>
+
+      <div class="collection-item">
+        <form class="" method="POST" action="{{ route('comments.store') }}">
+          @csrf
+          <input name="post_id" type="hidden" value="{{ $post->id }}">
+
+          <label for="body">コメント</label>
+          <textarea id="body" name="body" class="" rows="4">{{ old('body') }}</textarea>
+          @if ($errors->has('body'))
+          {{ $errors->first('body') }}
+          @endif
+
+          <button type="submit" class="btn btn-primary">コメントする</button>
+        </form>
+      </div>
+
+      <div class="collection-item">
+        <p class="h5 mb-4">コメント</p>
+        @forelse($post->comments as $comment)
+
+        <time class="">{{ $comment->created_at->format('Y.m.d H:i') }}</time>
+        <p class="mt-2">{!! nl2br(e($comment->body)) !!}</p>
+
+        <form method="POST" action="{{ action('PostsController@destroyComment', $post) }}">
+          @csrf
+          @method('DELETE')
+          <input type="hidden" name="comment_id" value="{{ $comment->id }}">
+          <button class="btn btn-danger" id="{{ $comment->id }}">コメント削除する</button>
+        </form>
+
+        @empty
+        <p>コメントはまだありません。</p>
+        @endforelse
+      </div>
+    </div>
+  </div>
+</div>
+@endsection

@@ -1,0 +1,52 @@
+@extends('layouts.index_master')
+@section('title', '問い合わせ：入力画面')
+@section('stylesheet')
+<link rel="stylesheet" href="{{ asset('css/contact.css') }}">
+@endsection
+@section('main')
+
+<div class="main">
+
+  <h2>お問い合わせ</h2>
+  <p><span class="now-page">入力画面</span> -> 確認画面 -> 完了画面</p>
+
+  <div class="row">
+    <form action="{{ url('contact/confirm') }}" method="post" class="col m10 s12 offset-m1">
+      <input type="hidden" name="_token" value="{{ csrf_token() }}">
+
+      <div class="input-field">
+        <label for="username">名前：</label>
+        <input type="text" class="" id="username" name="username" value="{{ old('username') }}">
+  @if($errors->has('username'))<span class="">{{ $errors->first('username') }}</span> @endif
+      </div>
+
+      <div class="input-field">
+        <label for="email">Email：</label>
+        <input type="text" class="" id="email" name="email" value="{{ old('email') }}">
+  @if($errors->has('email'))<span class="">{{ $errors->first('email') }}</span> @endif
+      </div>
+
+      <div class="input-field">
+        <label for="title">タイトル：</label>
+        <input type="text" class="" id="title" name="title" value="{{ old('title') }}">
+  @if($errors->has('title'))<span class="">{{ $errors->first('title') }}</span> @endif
+      </div>
+
+      <div class="row">
+        <div class="input-field col m10 s11">
+          <label for="body">内容：</label>
+          <textarea class="body-textarea" id="body" name="body" value="{{ old('body') }}"></textarea>
+          @if($errors->has('body'))<span class="">{{ $esrrors->first('body') }}</span> @endif
+        </div>
+      </div>
+
+      <div class="">
+        <input type="submit" name="button" value="送信" class="">
+      </div>
+    </form>
+
+  </div>
+
+</div>
+
+@endsection

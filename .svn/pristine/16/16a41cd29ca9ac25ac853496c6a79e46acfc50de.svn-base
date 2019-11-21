@@ -1,0 +1,23 @@
+document.addEventListener('DOMContentLoaded', function () {
+  var elem = document.querySelector('.collapsible.expandable');
+  var instance = M.Collapsible.init(elem, {
+    accordion: false
+  });
+});
+
+document.addEventListener('DOMContentLoaded', function () {
+  var elems = document.querySelectorAll('.materialboxed');
+  var instances = M.Materialbox.init(elems, {});
+});
+
+function selectZoo(obj) {
+  const value = obj.options[obj.selectedIndex].value;
+  const result = document.getElementsByClassName("result");
+  for (let i = 0; i < result.length; i++) {
+    if (result[i].id != value) {
+      console.log(result[i].id + "/" + value);
+      result[i].style.display = "none";
+    }
+    //一回全部displayで表示しなおす。
+  }
+}

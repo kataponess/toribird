@@ -1,0 +1,30 @@
+@extends('layouts.index_master')
+@section('stylesheet')
+<link rel="stylesheet" href="{{ asset('css/zoo.css') }}">
+@endsection
+@section('title', 'インコが見られる場所')
+@section('main')
+
+<div class="main">
+	<h2>動物園で見られるインコ・オウム<br>（東京都・神奈川県）</h2>
+
+	<div class="row">
+		@foreach ($zoos as $name => $zoo)
+		<div class="col xl4 m6 s12 result">
+			<div class="z-depth-5 zoo-name">{{ $name }}</div>
+			<ul>
+				@foreach ($zoo as $parrot)
+				<li class="z-depth-5">{{ $parrot }}</li>
+				@endforeach
+			</ul>
+		</div>
+		@endforeach
+	</div>
+
+	<footer>
+		<small>Copyright &copy; ToriBird All Rights Reserved.</small>
+	</footer><!-- footer -->
+
+</div>
+
+@endsection

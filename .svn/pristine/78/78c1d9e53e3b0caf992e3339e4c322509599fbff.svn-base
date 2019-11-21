@@ -1,0 +1,50 @@
+@extends('layouts.index_master')
+@section('title', '問い合わせ：確認画面')
+@section('stylesheet')
+<link rel="stylesheet" href="{{ asset('css/contact.css') }}">
+<link rel="stylesheet" href="{{ asset('css/confirm.css') }}">
+@endsection
+@section('main')
+
+<div class="main">
+
+  <h2>お問い合わせ</h2>
+  <p>入力画面 -> <span class="now-page">確認画面</span> -> 完了画面</p>
+
+  <form action="{{ url('contact/finish') }}" method="post" class="form-horizontal">
+    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+    <input type="hidden" name="username" value="{{$username}}">
+    <input type="hidden" name="email" value="{{$email}}">
+    <input type="hidden" name="title" value="{{$title}}">
+    <input type="hidden" name="body" value="{{$body}}">
+
+    <div class="row">
+      <label class="" for="username">名前：</label>
+      <div class="">{{$username}}</div>
+    </div>
+
+    <div class="row">
+      <label class="" for="email">Email：</label>
+      <div class="">{{$email}}</div>
+    </div>
+
+    <div class="row">
+      <label class="" for="title">タイトル：</label>
+      <div class="">{{$title}}</div>
+    </div>
+
+    <div class="row">
+      <label class="" for="body">内容：</label>
+      <div class="">{{$body}}</div>
+    </div>
+
+    <div class="row">
+      <div class="">
+        <input type="submit" name="button1" value="登録" class="btn btn-primary btn-wide">
+      </div>
+      </div>
+  </form>
+
+</div>
+
+@endsection

@@ -1,0 +1,23 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
+
+class Parrots extends Model
+{
+    // テーブル名のセット
+    protected $table = 'parrots';
+    // 主キーのセット
+    protected $guarded = array('id');
+    // 自動タイムスタンプ挿入の是非
+    public $timestamps = false;
+
+    public function getData()
+    {
+        $data = DB::table($this->table)->get();
+
+        return $data;
+    }
+}

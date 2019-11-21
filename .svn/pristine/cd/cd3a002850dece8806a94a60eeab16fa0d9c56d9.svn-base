@@ -1,0 +1,141 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use DB;
+use App\Models\Parrots;
+
+class ZooController extends Controller
+{
+    private function FindParrots($html, $zoo_name, $before_word, $after_word)
+    {
+        $parrot_names = ['インコ', 'オウム', 'ヨウム', 'バタン'];
+        $parrot = '';
+        DB::table('zoonames')->insert(['zooname' => $zoo_name]);
+
+
+        foreach ($parrot_names as $parrot_name) {
+            $sentence = $html;
+
+            for ($i = 0; ; $i++) {
+                if (mb_strpos($sentence, $parrot_name) === false) {
+                    break;
+                }
+
+                $position = mb_strpos($sentence, $parrot_name);
+
+                for ($j = -1; mb_substr($sentence, $position + $j, 1) != $before_word; $j--) {
+                    $parrot = mb_substr($sentence, $position + $j, 1) . $parrot;
+                }
+                $imagePath = $this->GetImages($parrot.$parrot_name);
+                if (preg_match("/^[ァ-ヾ]+$/u", $parrot.$parrot_name)) {
+                    $db_item = DB::table('parrots')->insert(['zoo_name' => $zoo_name, 'parrot_name' => $parrot.$parrot_name, 'path' => $imagePath]);
+                }
+                $parrot = '';
+
+                $sentence = mb_substr($sentence, $position);
+                $sentence = mb_substr($sentence, mb_strpos($sentence, $after_word) + 3);
+            }
+        }
+    }
+
+    private function GetImages($name)
+    {
+        if ($imagePath = @file_get_contents("https://ja.wikipedia.org/wiki/".$name)) {
+            $imagePath = mb_substr($imagePath, mb_strpos($imagePath, "<tbody>"));
+            $imagePath = mb_substr($imagePath, mb_strpos($imagePath, "src=")+5);
+
+            return mb_substr($imagePath, 0, strpos($imagePath, '"'));
+        } else {
+            $imagePath = @file_get_contents("http://animalchain.site/search?search=1&query_word=".$name);
+            $imagePath = mb_substr($imagePath, mb_strpos($imagePath, "<body>"));
+            $imagePath = mb_substr($imagePath, mb_strpos($imagePath, "animallistImage"));
+            $imagePath = mb_substr($imagePath, mb_strpos($imagePath, "serial")+11);
+
+            return "http://animalchain.site".mb_substr($imagePath, 0, strpos($imagePath, '>'));
+        }
+    }
+
+    public function Zoo()
+    {
+        // DB初期化
+        DB::table('parrots')->truncate();
+        DB::table('zoonames')->truncate();
+
+
+        /*---------- おびひろ動物園 ----------*/
+        $html = file_get_contents("https://www.city.obihiro.hokkaido.jp/zoo/animal/bird_list.html");
+        $zoo_name = 'おびひろ動物園';
+        $zoo_names[] = $zoo_name;
+        $before_word = '>';
+        $after_word = 'li>';
+
+        $this->FindParrots($html, $zoo_name, $before_word, $after_word);
+
+        /*---------- ズーラシア ----------*/
+        $html = file_get_contents("http://www.hama-midorinokyokai.or.jp/zoo/zoorasia/animal/");
+        $zoo_name = 'ズーラシア';
+        $zoo_names[] = $zoo_name;
+        $before_word = '"';
+        $after_word = 'li>';
+
+        $this->FindParrots($html, $zoo_name, $before_word, $after_word);
+
+        /*---------- 野毛山動物園 ----------*/
+        $html = file_get_contents("http://www.hama-midorinokyokai.or.jp/zoo/nogeyama/animal/");
+        $zoo_name = '野毛山動物園';
+        $zoo_names[] = $zoo_name;
+        $before_word = '"';
+        $after_word = 'li>';
+
+        $this->FindParrots($html, $zoo_name, $before_word, $after_word);
+
+        /*---------- 足立区生物園 ----------*/
+        $html = file_get_contents("http://animalchain.site/zoo/34");
+        $zoo_name = '足立区生物園';
+        $zoo_names[] = $zoo_name;
+        $before_word = '>';
+        $after_word = 'li>';
+
+        $this->FindParrots($html, $zoo_name, $before_word, $after_word);
+
+        // /*---------- 恩賜上野動物園 ----------*/
+        $html = file_get_contents("http://animalchain.site/zoo/29");
+        $zoo_name = '恩賜上野動物園';
+        $zoo_names[] = $zoo_name;
+        $before_word = '>';
+        $after_word = 'li>';
+
+        $this->FindParrots($html, $zoo_name, $before_word, $after_word);
+
+        /*---------- 江戸川区自然動物園 ----------*/
+        $html = file_get_contents("https://www.edogawa-kankyozaidan.jp/zoo/introduction/");
+        $zoo_name = '江戸川区自然動物園';
+        $zoo_names[] = $zoo_name;
+        $before_word = '"';
+        $after_word = 'iv>';
+
+        $this->FindParrots($html, $zoo_name, $before_word, $after_word);
+
+        /*---------- 多摩動物公園 ----------*/
+        $html = file_get_contents("http://animalchain.site/zoo/13");
+        $zoo_name = '多摩動物公園';
+        $zoo_names[] = $zoo_name;
+        $before_word = '>';
+        $after_word = 'li>';
+
+        $this->FindParrots($html, $zoo_name, $before_word, $after_word);
+
+
+        for ($i=0; $i<count($zoo_names); $i++) {
+            $zoos[$zoo_names[$i]] = DB::table('parrots')->where('zoo_name', $zoo_names[$i])->get();
+        }
+
+
+        $zoonames = DB::table('zoonames')->pluck('zooname');
+        $zoonames = $zoonames -> prepend('～動物園選択～');
+
+
+        return view('zoo', compact("zoos", "zoonames"));
+    }
+}

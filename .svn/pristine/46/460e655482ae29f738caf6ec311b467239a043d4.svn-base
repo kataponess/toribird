@@ -1,0 +1,24 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
+
+class Parrot extends Model
+{
+    public $timestamps = false; //timesatampを利用しない
+    protected $fillable = ['id', 'zooname_id', 'parrotname', 'path'];
+
+    public function getData()
+    {
+        $data = DB::table($this->table)->get();
+
+        return $data;
+    }
+
+    public function zooname()
+    {
+        return $this->belongsTo('App\zooname');
+    }
+}

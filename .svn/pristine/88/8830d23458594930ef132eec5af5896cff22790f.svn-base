@@ -1,0 +1,17 @@
+h2{
+	margin-left: 10px;
+}
+
+.edit{
+  display: flex;
+  justify-content: flex-start;
+  margin: 10px;
+}
+
+.edit a{
+  margin-right: 5px;
+}
+
+input, textarea{
+	font-family: 'Righteous', cursive, 'M PLUS Rounded 1c', sans-serif, '游ゴシック Medium', '游ゴシック体', 'Yu Gothic Medium', YuGothic, 'ヒラギノ角ゴ ProN', 'Hiragino Kaku Gothic ProN', 'メイリオ', Meiryo, 'ＭＳ Ｐゴシック', 'MS PGothic', sans-serif !important;
+}

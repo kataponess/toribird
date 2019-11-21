@@ -1,0 +1,28 @@
+h2{
+	font-size: 30px;
+}
+
+.row{
+	display: flex;
+	flex-wrap: wrap;
+	margin: 10px;
+}
+
+.result{
+	background: #3F51B5;
+	border: 3px solid white;
+	margin-right: auto;
+	margin-left: 0 !important;
+}
+
+.zoo-name{
+	background: #FF9800;
+	color: white;
+	font-size: 30px;
+	margin: 10px;
+}
+
+ul{
+	color: white;
+	font-size: 20px;
+}

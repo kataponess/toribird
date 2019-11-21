@@ -1,0 +1,57 @@
+h2{
+	font-size: 25px;
+	margin-left: 10px;
+}
+
+.row{
+	display: flex;
+	flex-wrap: wrap;
+	margin: 10px;
+}
+
+.select-zoonames{
+	background: #EF5350;
+	display: block;
+	margin-right: 0 !important;
+	margin-left: 0 !important;
+}
+
+.result{
+	margin-right: 0 !important;
+	margin-left: 0 !important;
+}
+
+.zoo-name-outer{
+	border: 3px solid #EF5350;
+}
+
+.zoo-name{
+	background: #EF5350;
+	color: black;
+	font-size: 20px;
+}
+
+.parrot-card{
+	display: flex;
+	align-items: center;
+	color: black;
+	font-size: 20px;
+	border: 3px solid #EF5350;
+}
+
+p{
+	margin: 0;
+}
+
+img{
+	width: 150px;
+	height: 150px;
+	object-fit: cover;
+	object-position: 10% 3%;
+	margin-top: 6px;
+	margin-left: 6px;
+}
+
+.parrot-name{
+	margin: 0 auto;
+}

@@ -1,0 +1,137 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use DB;
+use App\Models\Parrots;
+
+class ZooController extends Controller
+{
+    private function FindParrots($html, $zoo_name, $before_word, $after_word)
+    {
+        $parrot_names = ['インコ', 'オウム', 'ヨウム', 'バタン'];
+        $parrot = '';
+
+        foreach ($parrot_names as $parrot_name) {
+            $sentence = $html;
+
+            for ($i = 0; ; $i++) {
+                if (mb_strpos($sentence, $parrot_name) === false) {
+                    break;
+                }
+
+                $position = mb_strpos($sentence, $parrot_name);
+
+                for ($j = -1; mb_substr($sentence, $position + $j, 1) != $before_word; $j--) {
+                    $parrot = mb_substr($sentence, $position + $j, 1) . $parrot;
+                }
+                $db_item = DB::table('parrots')->insert(['zoo_name' => $zoo_name, 'parrot_name' => $parrot.$parrot_name]);
+                $parrot = '';
+
+                $sentence = mb_substr($sentence, $position);
+                $sentence = mb_substr($sentence, mb_strpos($sentence, $after_word) + 3);
+            }
+        }
+    }
+
+
+    public function Zoo()
+    {
+        // DB初期化
+        DB::table('parrots')->truncate();
+
+        /*---------- ズーラシア ----------*/
+        $html = file_get_contents("http://www.hama-midorinokyokai.or.jp/zoo/zoorasia/animal/");
+        $zoo_name = 'ズーラシア';
+        $before_word = '"';
+        $after_word = 'li>';
+
+        $this->FindParrots($html, $zoo_name, $before_word, $after_word);
+
+
+        /*---------- 野毛山動物園 ----------*/
+        $html = file_get_contents("http://www.hama-midorinokyokai.or.jp/zoo/nogeyama/animal/");
+        $zoo_name = '野毛山動物園';
+        $before_word = '"';
+        $after_word = 'li>';
+
+        $this->FindParrots($html, $zoo_name, $before_word, $after_word);
+
+
+        /*---------- 足立区生物園 ----------*/
+        $html = file_get_contents("http://animalchain.site/zoo/34");
+        $zoo_name = '足立区生物園';
+        $before_word = '>';
+        $after_word = 'li>';
+
+        $this->FindParrots($html, $zoo_name, $before_word, $after_word);
+
+
+        // /*---------- 上野動物園 ----------*/
+        // for ($page_number = 1; $page_number < 5; $page_number++) {
+        //     //404がでるまでの回数をカウントし、繰り返したい
+        //     $html = file_get_contents("https://ueno-zoo.mamakoe.jp/animal/page/".$page_number);
+        //     $zoo_name = '上野動物園';
+
+        //     foreach ($parrot_names as $parrot_name) {
+        //         $sentence = $html;
+
+        //         for ($i = 0; ; $i++) {
+        //             if (mb_strpos($sentence, $parrot_name) === false) {
+        //                 break;
+        //             }
+        //             $position = mb_strpos($sentence, $parrot_name."				  </ruby>");
+
+        //             for ($j = -1; mb_substr($sentence, $position + $j, 1) != ' '; $j--) {
+        //                 $parrot = mb_substr($sentence, $position + $j, 1) . $parrot;
+        //             }
+        //             $db_item = DB::table('parrots')->insert(['zoo_name' => $zoo_name, 'parrot_name' => $parrot.$parrot_name]);
+        //             $parrot = '';
+
+        //             $sentence = mb_substr($sentence, $position);
+        //             $sentence = mb_substr($sentence, mb_strpos($sentence, 'li>') + 3);
+        //         }
+        //     }
+        // }
+
+        /*---------- 江戸川区自然動物園 ----------*/
+        $html = file_get_contents("https://www.edogawa-kankyozaidan.jp/zoo/introduction/");
+        $zoo_name = '江戸川区自然動物園';
+        $before_word = '"';
+        $after_word = 'iv>';
+
+        $this->FindParrots($html, $zoo_name, $before_word, $after_word);
+
+        /*---------- 多摩動物公園 ----------*/
+        $html = file_get_contents("http://animalchain.site/zoo/13");
+        $zoo_name = '多摩動物公園';
+        $before_word = '>';
+        $after_word = 'li>';
+
+        $this->FindParrots($html, $zoo_name, $before_word, $after_word);
+
+
+
+
+        $zoorasia_parrots = DB::table('parrots')->where('zoo_name', 'ズーラシア')->pluck('parrot_name');
+        $nogeyama_parrots = DB::table('parrots')->where('zoo_name', '野毛山動物園')->pluck('parrot_name');
+        $adachi_parrots = DB::table('parrots')->where('zoo_name', '足立区生物園')->pluck('parrot_name');
+        $ueno_parrots = DB::table('parrots')->where('zoo_name', '上野動物園')->pluck('parrot_name');
+        $edogawa_parrots = DB::table('parrots')->where('zoo_name', '江戸川区自然動物園')->pluck('parrot_name');
+        $tama_parrots = DB::table('parrots')->where('zoo_name', '多摩動物公園')->pluck('parrot_name');
+
+
+        $zoos = [
+          "ズーラシア" => $zoorasia_parrots,
+          "野毛山動物園" => $nogeyama_parrots,
+          "足立区生物園" => $adachi_parrots,
+        //   "上野動物園" => $ueno_parrots,
+          "江戸川区自然動物園" => $edogawa_parrots,
+          "多摩動物公園" => $tama_parrots,
+          ];
+
+
+
+        return view('zoo', compact("zoos"));
+    }
+}

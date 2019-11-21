@@ -1,0 +1,31 @@
+.now-page{
+  display: inline-block;
+  text-align: center;
+  font-size: 25px;
+  font-weight: bold;
+  color: white;
+  background: #3F51B5;
+  width: 120px;
+  height: 40px;
+  line-height: 40px;
+  border-radius: 10px;
+}
+.body-textarea{
+  height: 7em;
+  line-height: 1.5em;
+}
+.input-field label {
+  color: #F06292;
+  font-size: 20px;
+}
+h2, p{
+  margin-left: 10px;
+}
+form{
+  border: 2px solid #F06292;
+  border-radius: 10px;
+}
+.submit{
+  margin-bottom: 20px;
+  user-select: none;
+}

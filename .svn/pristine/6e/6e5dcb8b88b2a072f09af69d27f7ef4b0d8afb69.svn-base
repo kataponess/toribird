@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link href="https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c:700&display=swap&subset=japanese" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Righteous&display=swap" rel="stylesheet">
+
+  <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
+  <link rel="stylesheet" href="{{ asset('css/master.css') }}">
+  @yield('stylesheet')
+  <title>@yield('title')</title>
+</head>
+<body>
+  <!-- ------------------- sidenav ------------------- -->
+  <ul id="slide-out" class="sidenav">
+    <li><a href="{{ url('/') }}"><i class="fas fa-dove fa-2x color"></i>インコ・オウム一覧</a></li>
+    <li><a href="{{ url('/bbs/1/') }}"><i class="fas fa-dove fa-2x color"></i>掲示板</a></li>
+    <li><a href="{{ url('/contact/') }}"><i class="fas fa-dove fa-2x color"></i>お問い合わせ</a></li>
+  </ul>
+
+  <!-- ------------------- header ------------------- -->
+  <header class="col s10 offset-s2">
+    <nav>
+      <div class="nav-wrapper">
+        <a href="" class="brand-logo">ToriBird</a>
+        <a href="" data-target="slide-out" class="sidenav-trigger"><i class="material-icons"><i class="fas fa-bars"></i></i></a>
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+          <li><a href="{{ url('/') }}">インコ・オウム一覧</a></li>
+          <li><a href="{{ url('/bbs/1/') }}">掲示板</a></li>
+          <li><a href="{{ url('/contact/') }}">お問い合わせ</a></li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+
+  <!-- ------------------- eyecatch ------------------- -->
+  <div class="eyecatch"></div>
+
+  <!-- ------------------- main ------------------- -->
+  @yield('main')
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <script src="{{ asset('js/master.js') }}"></script>
+  @yield('script')
+
+  <!-- ------------------- footer ------------------- -->
+  <footer>
+    <small>Copyright &copy; ToriBird All Rights Reserved.</small>
+  </footer><!-- footer -->
+
+</body>
+</html>

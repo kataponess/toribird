@@ -1,0 +1,22 @@
+h2{
+	font-size: 25px;
+	margin-left: 10px;
+}
+
+.btn-new{
+	margin-left: 10px;
+}
+
+form{
+  border: 2px solid #F06292;
+  border-radius: 10px;
+}
+
+table{
+  overflow-wrap: break-word;
+}
+
+th, td{
+	height: 40px;
+	line-height: 40px;
+}

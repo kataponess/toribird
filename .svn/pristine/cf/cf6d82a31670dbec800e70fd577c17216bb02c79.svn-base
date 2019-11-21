@@ -1,0 +1,50 @@
+@extends('layouts.index_master')
+@section('stylesheet')
+<link rel="stylesheet" href="{{ asset('css/zoo.css') }}">
+@endsection
+@section('title', 'インコが見られる場所')
+@section('main')
+
+<div class="main">
+  <h2>動物園で見られるインコ・オウム<br>（東京都・神奈川県）</h2>
+
+  <div class="row">
+    <select name="zoonames" class="select-zoonames col xl4 l6 s12" onchange="selectZoo(this)">
+      @foreach($zoonames as $index => $name)
+      <option value="{{ $name }}">{{ $name }}</option>
+      @endforeach
+    </select>
+  </div>
+
+  <div class="row">
+    @foreach ($zoos as $name => $zoo)
+    <div class="col xl4 l6 s12 result" id="{{ $name }}">
+      <ul class="zoo-name-outer z-depth-3">
+        <li>
+          <div class="zoo-name">{{ $name }}</div>
+        </li>
+        @foreach ($zoo as $parrot)
+        <li>
+          <ul class="parrot-card">
+            <li class="parrot-img">
+              <img src="{{ $parrot->path }}">
+            </li>
+            <li class="parrot-name">
+              <p>{{ $parrot->parrot_name }}</p>
+            </li>
+          </ul>
+        </li>
+        @endforeach
+      </ul>
+    </div>
+
+    @endforeach
+  </div>
+
+</div>
+
+@endsection
+
+@section('script')
+<script src="{{ asset('js/zoo.js') }}"></script>
+@endsection

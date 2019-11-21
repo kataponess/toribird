@@ -1,0 +1,16 @@
+<?php
+
+namespace App;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Prefecture extends Model
+{
+    public $timestamps = false;
+    protected $fillable = ['id', 'prefecturename'];
+
+    public function zoonames()
+    {
+        return $this->hasMany('App\Zooname');
+    }
+}

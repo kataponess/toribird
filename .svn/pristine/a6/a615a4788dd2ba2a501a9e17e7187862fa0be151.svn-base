@@ -1,0 +1,27 @@
+@extends('layouts.index_master')
+
+@section('main')
+<div class="main">
+  <div class="container">
+
+    <a href="{{ route('posts.create') }}" class="waves-effect waves-light btn">
+      投稿を新規作成する
+    </a>
+
+    @foreach ($posts as $post)
+    <ul class="collection z-depth-4">
+      <li class="collection-item">
+        {{ $post->title }}
+      </li>
+      <li class="collection-item">
+        <p class="card-text">{!! nl2br(e(str_limit($post->body, 200))) !!}</p>
+        <a class="card-link" href="{{ route('posts.show', ['post' => $post]) }}">続きを読む</a>
+      </li>
+      <li class="collection-item">
+        <span class="new badge" data-badge-caption="">コメント {{ $post->comments->count() }}件</span>投稿日時 {{ $post->created_at->format('Y.m.d') }}
+      </li>
+    </ul>
+    @endforeach
+  </div>
+</div>
+@endsection

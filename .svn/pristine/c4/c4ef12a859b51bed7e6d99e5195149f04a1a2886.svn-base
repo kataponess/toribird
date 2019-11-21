@@ -1,0 +1,19 @@
+<?php
+
+namespace App\Http\Controllers;
+
+class DisplayParrotsController extends Controller
+{
+    public function display()
+    {
+        for ($i = 1; $i <= (\App\zooname::count()); $i++) {
+            $parrotsTable[\App\zooname::find($i)->prefecture->prefecturename][\App\zooname::find($i)->zooname] = \App\zooname::find($i)->parrots->sortby('parrotname');
+        }
+
+        $zoonamesTable = \App\zooname::with('prefecture')->get();
+        $prefecturesTable = \App\prefecture::get();
+        $overviews = \App\overview::get();
+
+        return view('zoo', compact("parrotsTable", "zoonamesTable", "prefecturesTable", "overviews"));
+    }
+}

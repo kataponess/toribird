@@ -1,0 +1,45 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Http\Requests;
+use Illuminate\Support\Facades\Hash;
+
+class UsersController extends Controller
+{
+    public function getIndex()
+    {
+        $query = \App\User::query();
+        $users = $query->orderBy('role', 'asc')->orderBy('id', 'asc')->paginate(10);
+
+        foreach ($users as $user) {
+            if ($user->role == 1) {
+                $user->role = "開発者(権限：" . $user->role . ")";
+            } elseif ($user->role == 5) {
+                $user->role = "管理人(権限：" . $user->role . ")";
+            } else {
+                $user->role = "一般ユーザー(権限：" . $user->role . ")";
+            }
+        }
+
+        return view('users.list', compact('users'));
+    }
+
+    public function newIndex()
+    {
+        return view('users.new_index');
+    }
+
+    public function newConfirm(Requests\UserRequest $request)
+    {
+        $user = new \App\User;
+        $user->id =  rand(00000001, 99999999);
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->password = Hash::make($request->password);
+        $user->role = $request->role;
+        $user->save();
+
+        return view('users.new_confirm');
+    }
+}

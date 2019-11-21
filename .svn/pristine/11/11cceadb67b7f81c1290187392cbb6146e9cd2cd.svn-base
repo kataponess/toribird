@@ -1,0 +1,153 @@
+<?php
+
+namespace App\Http\Controllers;
+
+class CrawlingController extends Controller
+{
+    public function Zoo()
+    {
+        $words = ['インコ', 'オウム', 'ヨウム', 'バタン'];
+        $parrot = '';
+
+        /*---------- ズーラシア ----------*/
+        $html = file_get_contents("http://www.hama-midorinokyokai.or.jp/zoo/zoorasia/animal/");
+
+        foreach ($words as $word) {
+            $sentence = $html;
+            $count = substr_count($sentence, $word) / 2;
+
+            for ($i = 0; $i < $count; $i++) {
+                $position = mb_strpos($sentence, $word);
+
+                for ($j = -1; mb_substr($sentence, $position + $j, 1, "utf-8") != '"'; $j--) {
+                    $parrot = mb_substr($sentence, $position + $j, 1, "utf-8") . $parrot;
+                }
+                $zoorasia_parrots[] = $parrot.$word;
+                $strlen = mb_strlen($parrot) + 12;
+                $parrot = '';
+
+                $sentence = mb_substr($sentence, $position + $strlen);
+            }
+        }
+
+        /*---------- 野毛山動物園 ----------*/
+        $html = file_get_contents("http://www.hama-midorinokyokai.or.jp/zoo/nogeyama/animal/");
+
+        foreach ($words as $word) {
+            $sentence = $html;
+            $count = substr_count($sentence, $word) / 2;
+
+            for ($i = 0; $i < $count; $i++) {
+                $position = mb_strpos($sentence, $word);
+
+                for ($j = -1; mb_substr($sentence, $position + $j, 1, "utf-8") != '"'; $j--) {
+                    $parrot = mb_substr($sentence, $position + $j, 1, "utf-8") . $parrot;
+                }
+                $nogeyama_parrots[] = $parrot.$word;
+                $strlen = mb_strlen($parrot) + 12;
+                $parrot = '';
+
+                $sentence = mb_substr($sentence, $position + $strlen);
+            }
+        }
+
+        /*---------- 上野動物園 ----------*/
+        for ($page_number = 1; $page_number < 5; $page_number++) {
+            //404がでるまでの回数をカウントし、繰り返したい
+            $html = file_get_contents("https://ueno-zoo.mamakoe.jp/animal/page/".$page_number);
+
+            foreach ($words as $word) {
+                $sentence = $html;
+                $count = substr_count($sentence, $word."				  </ruby>");
+
+                for ($i = 0; $i < $count; $i++) {
+                    $position = mb_strpos($sentence, $word."				  </ruby>");
+
+                    for ($j = -1; mb_substr($sentence, $position + $j, 1, "utf-8") != ' '; $j--) {
+                        $parrot = mb_substr($sentence, $position + $j, 1, "utf-8") . $parrot;
+                    }
+                    $ueno_parrots[] = $parrot.$word;
+                    $strlen = mb_strlen($parrot) + 12;
+                    $parrot = '';
+
+                    $sentence = mb_substr($sentence, $position + $strlen);
+                }
+            }
+        }
+
+
+        /*---------- 多摩動物公園 ----------*/
+        $html = file_get_contents("http://animalchain.site/zoo/13");
+
+        foreach ($words as $word) {
+            $sentence = $html;
+            $count = substr_count($sentence, $word);
+
+            for ($i = 0; $i < $count; $i++) {
+                $position = mb_strpos($sentence, $word);
+
+                for ($j = -1; mb_substr($sentence, $position + $j, 1, "utf-8") != '>'; $j--) {
+                    $parrot = mb_substr($sentence, $position + $j, 1, "utf-8") . $parrot;
+                }
+                $tama_parrots[] = $parrot.$word;
+                $strlen = mb_strlen($parrot) + 12;
+                $parrot = '';
+
+                $sentence = mb_substr($sentence, $position + $strlen);
+            }
+        }
+
+        /*---------- 足立区生物園 ----------*/
+        $html = file_get_contents("http://animalchain.site/zoo/34");
+
+        foreach ($words as $word) {
+            $sentence = $html;
+            $count = substr_count($sentence, $word);
+
+            for ($i = 0; $i < $count; $i++) {
+                $position = mb_strpos($sentence, $word);
+
+                for ($j = -1; mb_substr($sentence, $position + $j, 1, "utf-8") != '>'; $j--) {
+                    $parrot = mb_substr($sentence, $position + $j, 1, "utf-8") . $parrot;
+                }
+                $adachi_parrots[] = $parrot.$word;
+                $strlen = mb_strlen($parrot) + 12;
+                $parrot = '';
+
+                $sentence = mb_substr($sentence, $position + $strlen);
+            }
+        }
+
+        /*---------- 江戸川区自然動物園 ----------*/
+        $html = file_get_contents("https://www.edogawa-kankyozaidan.jp/zoo/introduction/");
+
+        foreach ($words as $word) {
+            $sentence = $html;
+            $count = substr_count($sentence, $word) / 2;
+
+            for ($i = 0; $i < $count; $i++) {
+                $position = mb_strpos($sentence, $word);
+
+                for ($j = -1; mb_substr($sentence, $position + $j, 1, "utf-8") != '"'; $j--) {
+                    $parrot = mb_substr($sentence, $position + $j, 1, "utf-8") . $parrot;
+                }
+                $edogawa_parrots[] = $parrot.$word;
+                $strlen = mb_strlen($parrot) + 12;
+                $parrot = '';
+
+                $sentence = mb_substr($sentence, $position + $strlen);
+            }
+        }
+
+        $zoos = [
+            "ズーラシア" => $zoorasia_parrots,
+            "野毛山動物園" => $nogeyama_parrots,
+            "上野動物園" => $ueno_parrots,
+            "多摩動物公園" => $tama_parrots,
+            "足立区生物園" => $adachi_parrots,
+            "江戸川区自然動物園" => $edogawa_parrots,
+        ];
+
+        return view('crawling', compact("zoos"));
+    }
+}
