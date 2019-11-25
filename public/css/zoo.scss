@@ -21,12 +21,20 @@ cite a {
 }
 
 .modal {
-  width: 80vw;
+  width: 80%;
   top: 5% !important;
   max-height: 90%;
+  h4 {
+    padding: 24px 24px 0 24px;
+    @include mq($sm) {
+      font-size: 20px;
+    }
+  }
   &-inner {
     display: flex;
+    overflow-x: hidden;
     @include mq($md) {
+      width: 100%;
       flex-direction: column;
     }
     .left {
@@ -35,9 +43,9 @@ cite a {
         width: 100%;
       }
       .modal-content {
-        @include mq($md) {
-          padding: 24px 24px 0 24px !important;
-        }
+        // @include mq($md) {
+        padding: 0 24px 0 24px !important;
+        // }
       }
     }
     .right {
@@ -47,12 +55,13 @@ cite a {
       }
       &-inner {
         width: 100%;
+        text-align: center;
         .modal-img {
           width: 100%;
-          margin: 80px 10px 30px !important;
+          margin: 20px auto 30px !important;
           @include mq($md) {
             width: 89%;
-            margin: 0 30px 24px !important;
+            margin: 0 auto 24px !important;
           }
         }
       }

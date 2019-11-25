@@ -20,57 +20,57 @@ const selectPref = (obj) => {
 	const prefValue = obj.options[obj.selectedIndex].value;
 	const prefId = obj.options[obj.selectedIndex].id;
 	const zooId = document.getElementById("selectZoo");
-	const select = document.getElementsByClassName("select");
-	const result = document.getElementsByClassName("result");
+	const select = document.querySelectorAll(".select");
+	const result = document.querySelectorAll(".result");
 
 	zooId.selectedIndex = "0";
 
 	if (prefValue == '0') {
-		for (let i = 0; i < select.length; i++) {
-			select[i].classList.remove("hide");
-		}
+		select.forEach(function (element) {
+			element.classList.remove("hide");
+		})
 	} else {
-		for (let i = 0; i < select.length; i++) {
-			if (select[i].classList.contains(prefId)) {
-				select[i].classList.remove("hide");
+		select.forEach(function (element) {
+			if (element.classList.contains(prefId)) {
+				element.classList.remove("hide");
 			} else {
-				select[i].classList.add("hide");
+				element.classList.add("hide");
 			}
-		}
+		})
 	}
 
 	if (prefValue == '0') {
-		for (let i = 0; i < result.length; i++) {
-			result[i].classList.remove("hide");
-		}
+		result.forEach(function (element) {
+			element.classList.remove("hide");
+		})
 	} else {
-		for (let i = 0; i < result.length; i++) {
-			if (result[i].classList.contains(prefValue)) {
-				result[i].classList.remove("hide");
+		result.forEach(function (element) {
+			if (element.classList.contains(prefValue)) {
+				element.classList.remove("hide");
 			} else {
-				result[i].classList.add("hide");
+				element.classList.add("hide");
 			}
-		}
+		})
 	}
 }
 
 const selectZoo = (obj) => {
 	const prefValue = document.getElementById("selectPref").value;
 	const zooValue = obj.options[obj.selectedIndex].value;
-	const result = document.getElementsByClassName("result");
+	const result = document.querySelectorAll(".result");
 	if (zooValue == '0') {
-		for (let i = 0; i < result.length; i++) {
-			if (result[i].classList.contains(prefValue)) {
-				result[i].classList.remove("hide");
+		result.forEach(function (element) {
+			if (element.classList.contains(prefValue)) {
+				element.classList.remove("hide");
 			}
-		}
+		})
 	} else {
-		for (let i = 0; i < result.length; i++) {
-			if (result[i].id == zooValue) {
-				result[i].classList.remove("hide");
+		result.forEach(function (element) {
+			if (element.id == zooValue) {
+				element.classList.remove("hide");
 			} else {
-				result[i].classList.add("hide");
+				element.classList.add("hide");
 			}
-		}
+		})
 	}
 }

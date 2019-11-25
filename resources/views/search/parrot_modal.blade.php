@@ -1,9 +1,9 @@
 @foreach ($overviews as $overview)
 <div id="{{ $overview->parrotname }}" class="modal">
+  <h4>{{ $overview->parrotname }}</h4>
   <div class="modal-inner">
     <div class="left">
       <div class="modal-content">
-        <h4>{{ $overview->parrotname }}</h4>
         <blockquote cite="https://ja.wikipedia.org/wiki/{{ $overview->parrotname }}">
           <p>{{ $overview->overview }}</p>
           <cite><a href="https://ja.wikipedia.org/wiki/{{ $overview->parrotname }}" target="_blank">引用：Wikipedia</a></cite>

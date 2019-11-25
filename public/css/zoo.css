@@ -10,17 +10,29 @@ cite a {
 }
 
 .modal {
-  width: 80vw;
+  width: 80%;
   top: 5% !important;
   max-height: 90%;
 }
 
+.modal h4 {
+  padding: 24px 24px 0 24px;
+}
+
+@media (max-width: 576px) {
+  .modal h4 {
+    font-size: 20px;
+  }
+}
+
 .modal-inner {
   display: flex;
+  overflow-x: hidden;
 }
 
 @media (max-width: 768px) {
   .modal-inner {
+    width: 100%;
     flex-direction: column;
   }
 }
@@ -35,10 +47,8 @@ cite a {
   }
 }
 
-@media (max-width: 768px) {
-  .modal-inner .left .modal-content {
-    padding: 24px 24px 0 24px !important;
-  }
+.modal-inner .left .modal-content {
+  padding: 0 24px 0 24px !important;
 }
 
 .modal-inner .right {
@@ -53,17 +63,18 @@ cite a {
 
 .modal-inner .right-inner {
   width: 100%;
+  text-align: center;
 }
 
 .modal-inner .right-inner .modal-img {
   width: 100%;
-  margin: 80px 10px 30px !important;
+  margin: 20px auto 30px !important;
 }
 
 @media (max-width: 768px) {
   .modal-inner .right-inner .modal-img {
     width: 89%;
-    margin: 0 30px 24px !important;
+    margin: 0 auto 24px !important;
   }
 }
 
