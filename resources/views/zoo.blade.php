@@ -13,10 +13,10 @@
 
 		<div class="dropdownlist col xl2 l3 m4 s10">
 			<label>都道府県選択</label>
-			<select class="browser-default" onchange="selectPref(this)" id="selectPref">
-				<option value="0" selected>選択してください</option>
+			<select class="browser-default cursor" onchange="selectPref(this)" id="selectPref">
+				<option value="0" selected class="cursor">選択してください</option>
 				@foreach($prefecturesTable as $prefectureTable)
-				<option value="{{ $prefectureTable->prefecturename }}" id="{{ $prefectureTable->id }}">{{ $prefectureTable->prefecturename }}</option>
+				<option value="{{ $prefectureTable->prefecturename }}" id="{{ $prefectureTable->id }}" class="cursor">{{ $prefectureTable->prefecturename }}</option>
 				@endforeach
 			</select>
 		</div>
@@ -25,10 +25,10 @@
 
 		<div class="dropdownlist col xl2 l3 m4 s10">
 			<label>動物園選択</label>
-			<select class="browser-default" onchange="selectZoo(this)" id="selectZoo">
-				<option value="0" selected>選択してください</option>
+			<select class="browser-default cursor" onchange="selectZoo(this)" id="selectZoo">
+				<option value="0" selected class="cursor">選択してください</option>
 				@foreach($zoonamesTable as $zoonameTable)
-				<option value="{{ $zoonameTable->zooname }}" class="select {{ $zoonameTable->prefecture_id }}">{{ $zoonameTable->zooname }}</option>
+				<option value="{{ $zoonameTable->zooname }}" class="select {{ $zoonameTable->prefecture_id }}" class="cursor">{{ $zoonameTable->zooname }}</option>
 				@endforeach
 			</select>
 		</div>

@@ -11,7 +11,8 @@ body {
   color: #040404;
   list-style: none;
   text-decoration: none;
-  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
 }
 
 body,
@@ -91,3 +92,4 @@ small {
 .main {
   padding-top: 50px;
 }
+/*# sourceMappingURL=master.css.map */

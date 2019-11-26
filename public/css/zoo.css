@@ -26,6 +26,8 @@ cite a {
 }
 
 .modal-inner {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
   overflow-x: hidden;
 }
@@ -33,7 +35,10 @@ cite a {
 @media (max-width: 768px) {
   .modal-inner {
     width: 100%;
-    flex-direction: column;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
   }
 }
 
@@ -88,9 +93,16 @@ h2 {
   margin-left: 10px;
 }
 
+.cursor {
+  cursor: pointer;
+}
+
 .row {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
   margin: 10px;
 }
 
@@ -128,8 +140,12 @@ select {
 .zoo-name {
   background: #ff4772;
   color: black;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: space-between;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
 }
 
 .zoo-name .name {
@@ -144,8 +160,12 @@ select {
 }
 
 .parrot-card {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  align-items: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   color: black;
   font-size: 20px;
   border: 3px solid #ff4772;
@@ -159,8 +179,10 @@ p {
 .result-img {
   width: 100px;
   height: 100px;
-  object-fit: cover;
-  object-position: top center;
+  -o-object-fit: cover;
+     object-fit: cover;
+  -o-object-position: top center;
+     object-position: top center;
   margin-top: 6px;
   margin-left: 6px;
 }
@@ -179,14 +201,21 @@ p {
   width: 100%;
   height: 3px;
   background: black;
-  transform: scale(0, 1);
-  transform-origin: right top;
+  -webkit-transform: scale(0, 1);
+          transform: scale(0, 1);
+  -webkit-transform-origin: right top;
+          transform-origin: right top;
+  -webkit-transition: -webkit-transform 0.3s;
+  transition: -webkit-transform 0.3s;
   transition: transform 0.3s;
+  transition: transform 0.3s, -webkit-transform 0.3s;
 }
 
 .parrot-card:hover .result-name::after {
-  transform-origin: left top;
-  transform: scale(1, 1);
+  -webkit-transform-origin: left top;
+          transform-origin: left top;
+  -webkit-transform: scale(1, 1);
+          transform: scale(1, 1);
 }
 
 @media (max-width: 576px) {
@@ -194,3 +223,4 @@ p {
     display: none;
   }
 }
+/*# sourceMappingURL=zoo.css.map */
