@@ -399,7 +399,6 @@ class GetParrotsController extends Controller
 		$html = file_get_contents("http://animalchain.site/zoo/57");
 		$pref_id = \App\Prefecture::where('prefecturename', '静岡県')->value('id');
 		$zoo_name = '伊豆シャボテン公園';
-		$start_point = "";
 		$before_word = '>';
 		$after_word = 'li>';
 
