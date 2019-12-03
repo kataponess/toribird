@@ -9,6 +9,7 @@
 	<h2>動物園で見られるインコ・オウム</h2>
 
 	<!--------------------- select --------------------->
+
 	<div class="select-area row">
 
 		<div class="dropdownlist col xl2 l3 m4 s10">
@@ -16,7 +17,7 @@
 			<select class="browser-default cursor" onchange="selectPref(this)" id="selectPref">
 				<option value="0" selected class="cursor">選択してください</option>
 				@foreach($prefecturesTable as $prefectureTable)
-				<option value="{{ $prefectureTable->prefecturename }}" id="{{ $prefectureTable->id }}" class="cursor">{{ $prefectureTable->prefecturename }}</option>
+				<option value="{{ $prefectureTable->prefecturename }}" id="{{ $prefectureTable->id }}" class="cursor">{{ $prefectureTable->prefecturename }}[ {{ $prefectureTable->count }} ]</option>
 				@endforeach
 			</select>
 		</div>

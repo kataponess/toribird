@@ -58,64 +58,67 @@
     <nav>
       <div class="nav-wrapper">
         <a href="{{ url('/') }}" class="brand-logo"><img src="{{ asset('/storage/img/ToriBird-logo-white.png') }}"></a>
-        <a href="" data-target="slide-out" class="sidenav-trigger"><i class="material-icons"><i class="fas fa-bars"></i></i></a>
-        <ul id="nav-mobile" class="right hide-on-med-and-down">
+          <a href="" data-target="slide-out" class="sidenav-trigger"><i class="material-icons"><i class="fas fa-bars"></i></i></a>
+          <ul id="nav-mobile" class="right hide-on-med-and-down">
 
-          <!-- <li>
+            <!-- <li>
               <a class="dropdown-trigger" href="#!" data-target="dropdown2">クローリング<i class="material-icons right">arrow_drop_down</i></a>
             </li> -->
 
-          <ul id="dropdown2" class="dropdown-content">
-            <li><a href="{{ url('/getparrots/touhoku') }}">開始する！</a></li>
-          </ul>
+            <ul id="dropdown2" class="dropdown-content">
+              <li><a href="{{ url('/getparrots/touhoku') }}">開始する！</a></li>
+            </ul>
 
-          <li><a href="{{ url('/') }}">インコ・オウム一覧</a></li>
-          <!-- <li><a href="{{ url('/bbs/1/') }}">掲示板</a></li> -->
-          <li><a href="{{ url('/contact/') }}">お問い合わせ</a></li>
-          @guest
-          <li>
-            <a href="{{ route('login') }}">管理画面</a>
-          </li>
-          @if (Route::has('register'))
-          <!-- <li>
+            <li><a href="{{ url('/') }}">インコ・オウム一覧</a></li>
+            <!-- <li><a href="{{ url('/bbs/1/') }}">掲示板</a></li> -->
+            <li><a href="{{ url('/contact/') }}">お問い合わせ</a></li>
+            @guest
+            <li>
+              <a href="{{ route('login') }}">管理画面</a>
+            </li>
+            @if (Route::has('register'))
+            <!-- <li>
             <a href="{{ route('register') }}">登録</a>
           </li> -->
-          @endif
-          @else
-          <!-- <li><a class="dropdown-trigger" href="#!" data-target="dropdown1">{{ Auth::user()->name }}<i class="material-icons right">arrow_drop_down</i></a></li> -->
+            @endif
+            @else
+            <!-- <li><a class="dropdown-trigger" href="#!" data-target="dropdown1">{{ Auth::user()->name }}<i class="material-icons right">arrow_drop_down</i></a></li> -->
 
-          <li><a class="dropdown-trigger" href="#!" data-target="dropdown1">管理者機能<i class="material-icons right">arrow_drop_down</i></a></li>
+            <li><a class="dropdown-trigger" href="#!" data-target="dropdown1">管理者機能<i class="material-icons right">arrow_drop_down</i></a></li>
 
-          <ul id="dropdown1" class="dropdown-content dd1">
-            <li>
-              <a href="{{ url('/users/list') }}">ユーザー管理</a>
-            </li>
-            <li>
-              <a href="{{ url('/bbs/1/') }}">掲示板</a>
-            </li>
-            <li>
-              <a href="{{ url('/getparrotsdelete') }}">クローリング初期化</a>
-            </li>
-            <li>
-              <a href="{{ url('/getparrotstohoku') }}">クローリング東北</a>
-            </li>
-            <li>
-              <a href="{{ url('/getparrotskanto') }}">クローリング関東</a>
-            </li>
-            <li>
-              <a href="{{ url('/getparrotschubu') }}">クローリング中部</a>
-            </li>
-            <li><a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">ログアウト</a>
-              <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                @csrf
-              </form>
-            </li>
+            <ul id="dropdown1" class="dropdown-content dd1">
+              <li>
+                <a href="{{ url('/users/list') }}">ユーザー管理</a>
+              </li>
+              <li>
+                <a href="{{ url('/bbs/1/') }}">掲示板</a>
+              </li>
+              <li>
+                <a href="{{ url('/getparrotsdelete') }}">クローリング初期化</a>
+              </li>
+              <li>
+                <a href="{{ url('/getparrotstohoku') }}">クローリング東北</a>
+              </li>
+              <li>
+                <a href="{{ url('/getparrotskanto') }}">クローリング関東</a>
+              </li>
+              <li>
+                <a href="{{ url('/getparrotschubu') }}">クローリング中部</a>
+              </li>
+              <li>
+                <a href="{{ url('/getparrotskinki') }}">クローリング近畿</a>
+              </li>
+              <li><a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">ログアウト</a>
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                  @csrf
+                </form>
+              </li>
+            </ul>
+
+
+            @endguest
+
           </ul>
-
-
-          @endguest
-
-        </ul>
       </div>
     </nav>
   </header>

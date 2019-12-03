@@ -15,6 +15,10 @@ class DisplayParrotsController extends Controller
 		$parrotnamesTable = \App\Parrotname::orderBy('parrotname', 'asc')->get();
 		$overviews = \App\Overview::get();
 
+		for ($j = 0; $j < 47; $j++) {
+			$prefecturesTable[$j]->count = \App\Zooname::where('prefecture_id', $j + 1)->count();
+		}
+
 		return view('zoo', compact("parrotsTable", "zoonamesTable", "prefecturesTable", "parrotnamesTable", "overviews"));
 	}
 }
