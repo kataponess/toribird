@@ -1,6 +1,6 @@
 @extends('layouts.index_master')
 @section('stylesheet')
-<link rel="stylesheet" href="{{ asset('css/post.css') }}">
+<link rel="stylesheet" href="{{ asset('css/post.min.css') }}">
 @endsection
 @section('title', 'インコが見られる場所|掲示板')
 @section('main')

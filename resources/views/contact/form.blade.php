@@ -1,7 +1,7 @@
 @extends('layouts.index_master')
 @section('title', '問い合わせ：入力画面')
 @section('stylesheet')
-<link rel="stylesheet" href="{{ asset('css/contact.css') }}">
+<link rel="stylesheet" href="{{ asset('css/contact.min.css') }}">
 @endsection
 @section('main')
 

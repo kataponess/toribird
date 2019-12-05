@@ -1,0 +1,92 @@
+html {
+  overflow-y: scroll;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  font-weight: 600;
+  color: #040404;
+  list-style: none;
+  text-decoration: none;
+  box-sizing: border-box;
+}
+
+body,
+.btn,
+a {
+  font-family: "Oswald", sans-serif, "Noto Sans JP", sans-serif, "Avenir", "Helvetica Neue", "Helvetica", "Arial",
+    "Hiragino Sans", "ヒラギノ角ゴシック", YuGothic, "Yu Gothic", "メイリオ", Meiryo, "ＭＳ Ｐゴシック", "MS PGothic";
+}
+
+.btn {
+  background: #ff4772;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  font-weight: 600;
+}
+
+/*----------------------- sidenav -----------------------*/
+.sidenav {
+  /* background: #ff4772; */
+  border: 10px solid #ff4772;
+  border-radius: 30px;
+}
+
+.dd2 {
+  position: relative;
+  top: -50px;
+  left: 0;
+}
+
+/*----------------------- header -----------------------*/
+header {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  z-index: 10;
+}
+
+.nav-wrapper {
+  background: #1976d2;
+}
+
+.brand-logo {
+  margin-left: 15px;
+  height: 100%;
+}
+
+.brand-logo img {
+  height: 100%;
+}
+
+.dd1 {
+  position: relative;
+  top: -50px;
+  left: 0;
+}
+
+/*----------------------- footer -----------------------*/
+footer {
+  background: #1976d2;
+  width: 100%;
+  height: 80px;
+  text-align: center;
+}
+small {
+  color: white;
+  line-height: 80px;
+  font-size: 120%;
+}
+
+/*----------------------- main -----------------------*/
+.main {
+  padding-top: 50px;
+}

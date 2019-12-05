@@ -1,0 +1,19 @@
+h2 {
+  margin-left: 10px;
+}
+
+.edit {
+  display: flex;
+  justify-content: flex-start;
+  margin: 10px;
+}
+
+.edit a {
+  margin-right: 5px;
+}
+
+input,
+textarea {
+  font-family: "Oswald", sans-serif, "Noto Sans JP", sans-serif, "Avenir", "Helvetica Neue", "Helvetica", "Arial",
+    "Hiragino Sans", "ヒラギノ角ゴシック", YuGothic, "Yu Gothic", "メイリオ", Meiryo, "ＭＳ Ｐゴシック", "MS PGothic" !important;
+}

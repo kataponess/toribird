@@ -1,8 +1,8 @@
 @extends('layouts.index_master')
 @section('title', '問い合わせ：完了画面')
 @section('stylesheet')
-<link rel="stylesheet" href="{{ asset('css/contact.css') }}">
-<link rel="stylesheet" href="{{ asset('css/finish.css') }}">
+<link rel="stylesheet" href="{{ asset('css/contact.min.css') }}">
+<link rel="stylesheet" href="{{ asset('css/finish.min.css') }}">
 @endsection
 @section('main')
 

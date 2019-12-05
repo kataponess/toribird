@@ -12,7 +12,7 @@
   <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link rel="stylesheet" href="{{ asset('css/master.css') }}">
+  <link rel="stylesheet" href="{{ asset('css/master.min.css') }}">
   @yield('stylesheet')
   <link rel="shortcut icon" type="image/x-icon" href="{{ asset('images/favicon.ico') }}">
   <title>@yield('title')</title>
@@ -134,7 +134,7 @@
 
   <!-- ------------------- footer ------------------- -->
   <footer>
-    <small>© 2019 TORIBIRD</small>
+    <small>© 2019 ToriBird</small>
   </footer><!-- footer -->
 
 </body>

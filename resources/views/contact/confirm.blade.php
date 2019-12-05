@@ -1,8 +1,8 @@
 @extends('layouts.index_master')
 @section('title', '問い合わせ：確認画面')
 @section('stylesheet')
-<link rel="stylesheet" href="{{ asset('css/contact.css') }}">
-<link rel="stylesheet" href="{{ asset('css/confirm.css') }}">
+<link rel="stylesheet" href="{{ asset('css/contact.min.css') }}">
+<link rel="stylesheet" href="{{ asset('css/confirm.min.css') }}">
 @endsection
 @section('main')
 

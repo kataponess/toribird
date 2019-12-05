@@ -1,6 +1,6 @@
 @extends('layouts.index_master')
 @section('stylesheet')
-<link rel="stylesheet" href="{{ asset('css/users.css') }}">
+<link rel="stylesheet" href="{{ asset('css/users.min.css') }}">
 @endsection
 @section('title', '登録|管理者画面｜TORIBIRD')
 @section('main')

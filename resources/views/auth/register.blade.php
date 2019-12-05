@@ -1,6 +1,6 @@
 @extends('layouts.index_master')
 @section('stylesheet')
-<link rel="stylesheet" href="{{ asset('css/login.css') }}">
+<link rel="stylesheet" href="{{ asset('css/login.min.css') }}">
 @endsection
 @section('title', 'インコが見られる場所|ログイン')
 @section('main')
