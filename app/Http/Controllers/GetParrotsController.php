@@ -364,6 +364,160 @@ class GetParrotsController extends Controller
 		$before_word = '"';
 		$after_word = '</div>';
 		$this->findParrot($html, $pref_id, $zoo_name, $before_word, $after_word);
+		/*---------- 淡路ファームパーク イングランドの丘 ----------*/
+		$html = file_get_contents("https://www.england-hill.com/animal-irotoridori/");
+		$pref_id = \App\Prefecture::where('prefecturename', '兵庫県')->value('id');
+		$zoo_name = '淡路ファームパーク イングランドの丘';
+		$before_word = '/';
+		$after_word = '</a>';
+		$this->findParrot($html, $pref_id, $zoo_name, $before_word, $after_word);
+		/*---------- 神戸市立王子動物園 ----------*/
+		$html = file_get_contents("http://www.kobe-ojizoo.jp/animal/pictorial/category.php?c=2");
+		$pref_id = \App\Prefecture::where('prefecturename', '兵庫県')->value('id');
+		$zoo_name = '神戸市立王子動物園';
+		$before_word = '>';
+		$after_word = '</a>';
+		$this->findParrot($html, $pref_id, $zoo_name, $before_word, $after_word);
+		/*---------- 神戸どうぶつ王国 ----------*/
+		$html = file_get_contents("https://www.kobe-oukoku.com/friend/");
+		$pref_id = \App\Prefecture::where('prefecturename', '兵庫県')->value('id');
+		$zoo_name = '神戸どうぶつ王国';
+		$before_word = '"';
+		$after_word = '</h4>';
+		$this->findParrot($html, $pref_id, $zoo_name, $before_word, $after_word);
+		/*---------- 姫路市立動物園 ----------*/
+		$html = file_get_contents("http://animalchain.site/zoo/72");
+		$pref_id = \App\Prefecture::where('prefecturename', '兵庫県')->value('id');
+		$zoo_name = '姫路市立動物園';
+		$before_word = '>';
+		$after_word = 'li>';
+		$this->findParrot($html, $pref_id, $zoo_name, $before_word, $after_word);
+		/*---------- 和歌山公園動物園 ----------*/
+		$html = file_get_contents("http://animalchain.site/zoo/70");
+		$pref_id = \App\Prefecture::where('prefecturename', '和歌山県')->value('id');
+		$zoo_name = '和歌山公園動物園';
+		$before_word = '>';
+		$after_word = 'li>';
+		$this->findParrot($html, $pref_id, $zoo_name, $before_word, $after_word);
+
+		return redirect('/');
+	}
+	/* ----- 中国 ----- */
+	public function getParrotsChugoku()
+	{
+		/*---------- 渋川動物公園 ----------*/
+		$html = file_get_contents("http://animalchain.site/zoo/202");
+		$pref_id = \App\Prefecture::where('prefecturename', '岡山県')->value('id');
+		$zoo_name = '渋川動物公園';
+		$before_word = '>';
+		$after_word = '</li>';
+		$this->findParrot($html, $pref_id, $zoo_name, $before_word, $after_word);
+		/*---------- 広島市安佐動物公園 ----------*/
+		$html = file_get_contents("http://www.asazoo.jp/animal/");
+		$pref_id = \App\Prefecture::where('prefecturename', '広島県')->value('id');
+		$zoo_name = '広島市安佐動物公園';
+		$before_word = '>';
+		$after_word = '</li>';
+		$this->findParrot($html, $pref_id, $zoo_name, $before_word, $after_word);
+		/*---------- 福山市立動物園 ----------*/
+		$html = file_get_contents("http://www.fukuyamazoo.jp/animals.php");
+		$pref_id = \App\Prefecture::where('prefecturename', '広島県')->value('id');
+		$zoo_name = '福山市立動物園';
+		$before_word = '>';
+		$after_word = '</table>';
+		$this->findParrot($html, $pref_id, $zoo_name, $before_word, $after_word);
+		/*---------- 宇部市ときわ動物園 ----------*/
+		$html = file_get_contents("https://www.tokiwapark.jp/zoo/animal/");
+		$pref_id = \App\Prefecture::where('prefecturename', '山口県')->value('id');
+		$zoo_name = '宇部市ときわ動物園';
+		$before_word = '>';
+		$after_word = '</li>';
+		$this->findParrot($html, $pref_id, $zoo_name, $before_word, $after_word);
+		/*---------- 周南市徳山動物園 ----------*/
+		$html = file_get_contents("http://www.city.shunan.lg.jp/site/zoo/list167-585.html");
+		$pref_id = \App\Prefecture::where('prefecturename', '山口県')->value('id');
+		$zoo_name = '周南市徳山動物園';
+		$before_word = '"';
+		$after_word = '</a>';
+		$this->findParrot($html, $pref_id, $zoo_name, $before_word, $after_word);
+		/*---------- 愛媛県立とべ動物園 ----------*/
+		$html = file_get_contents("https://www.tobezoo.com/animals/library/kind/ki18/");
+		$pref_id = \App\Prefecture::where('prefecturename', '愛知県')->value('id');
+		$zoo_name = '愛媛県立とべ動物園';
+		$before_word = '"';
+		$after_word = '</li>';
+		$this->findParrot($html, $pref_id, $zoo_name, $before_word, $after_word);
+		/*---------- 高知県立のいち動物公園 ----------*/
+		$html = file_get_contents("http://www.noichizoo.or.jp/park/animal_intro.html");
+		$pref_id = \App\Prefecture::where('prefecturename', '高知県')->value('id');
+		$zoo_name = '高知県立のいち動物公園';
+		$before_word = '>';
+		$after_word = '</a>';
+		$this->findParrot($html, $pref_id, $zoo_name, $before_word, $after_word);
+		/*---------- わんぱーくこうちアニマルランド ----------*/
+		$html = file_get_contents("http://animalchain.site/zoo/82");
+		$pref_id = \App\Prefecture::where('prefecturename', '高知県')->value('id');
+		$zoo_name = 'わんぱーくこうちアニマルランド';
+		$before_word = '>';
+		$after_word = '</li>';
+		$this->findParrot($html, $pref_id, $zoo_name, $before_word, $after_word);
+
+		return redirect('/');
+	}
+	/* ----- 九州 ----- */
+	public function getParrotsKyushu()
+	{
+		/*---------- 到津の森公園 ----------*/
+		$html = file_get_contents("http://animalchain.site/zoo/84");
+		$pref_id = \App\Prefecture::where('prefecturename', '福岡県')->value('id');
+		$zoo_name = '到津の森公園';
+		$before_word = '>';
+		$after_word = '</li>';
+		$this->findParrot($html, $pref_id, $zoo_name, $before_word, $after_word);
+		/*---------- 大牟田市動物園 ----------*/
+		$html = file_get_contents("http://animalchain.site/zoo/86");
+		$pref_id = \App\Prefecture::where('prefecturename', '福岡県')->value('id');
+		$zoo_name = '大牟田市動物園';
+		$before_word = '>';
+		$after_word = '</li>';
+		$this->findParrot($html, $pref_id, $zoo_name, $before_word, $after_word);
+		/*---------- 久留米市鳥類センター ----------*/
+		$html = file_get_contents("https://kurumekoen.org/birdc/birdc_animals/");
+		$pref_id = \App\Prefecture::where('prefecturename', '福岡県')->value('id');
+		$zoo_name = '久留米市鳥類センター';
+		$before_word = '>';
+		$after_word = '</td>';
+		$this->findParrot($html, $pref_id, $zoo_name, $before_word, $after_word);
+		/*---------- ピクニカ共和国 ----------*/
+		$html = file_get_contents("http://piknica.com/introduction/introductioncat/%e3%81%9d%e3%81%ae%e4%bb%96%e7%a8%ae%e9%a1%9e/");
+		$pref_id = \App\Prefecture::where('prefecturename', '福岡県')->value('id');
+		$zoo_name = 'ピクニカ共和国';
+		$before_word = '>';
+		$after_word = '</li>';
+		$this->findParrot($html, $pref_id, $zoo_name, $before_word, $after_word);
+		/*---------- 福岡市動物園 ----------*/
+		$html = file_get_contents("http://animalchain.site/zoo/85");
+		$pref_id = \App\Prefecture::where('prefecturename', '福岡県')->value('id');
+		$zoo_name = '福岡市動物園';
+		$before_word = '>';
+		$after_word = '</li>';
+		$this->findParrot($html, $pref_id, $zoo_name, $before_word, $after_word);
+		/*----------  ----------*/
+		// $html = file_get_contents("https://www.itozu-zoo.jp/friends/");
+		// $pref_id = \App\Prefecture::where('prefecturename', '福岡県')->value('id');
+		// $zoo_name = '';
+		// $before_word = '>';
+		// $after_word = '</td>';
+		// $this->findParrot($html, $pref_id, $zoo_name, $before_word, $after_word);
+		/*----------  ----------*/
+		// $html = file_get_contents("https://www.itozu-zoo.jp/friends/");
+		// $pref_id = \App\Prefecture::where('prefecturename', '福岡県')->value('id');
+		// $zoo_name = '';
+		// $before_word = '>';
+		// $after_word = '</td>';
+		// $this->findParrot($html, $pref_id, $zoo_name, $before_word, $after_word);
+
+
 		return redirect('/');
 	}
 }

@@ -45,9 +45,9 @@
       <li>
         <a href="{{ url('/users/list') }}">ユーザー管理</a>
       </li>
-      <li>
+      <!-- <li>
         <a href="{{ url('/getparrots') }}">クローリング</a>
-      </li>
+      </li> -->
     </ul>
 
     @endguest
@@ -107,6 +107,12 @@
             </li>
             <li>
               <a href="{{ url('/getparrotskinki') }}">クローリング近畿</a>
+            </li>
+            <li>
+              <a href="{{ url('/getParrotschugoku') }}">クローリング中国</a>
+            </li>
+            <li>
+              <a href="{{ url('/getParrotskyushu') }}">クローリング九州</a>
             </li>
             <li><a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">ログアウト</a>
               <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
