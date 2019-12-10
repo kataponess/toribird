@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,aAAa,AAAC,CACZ,SAAS,CAAE,IAAI,CACf,MAAM,CAAE,GAAG,CACZ",
+    "sources": [
+        "confirm.scss"
+    ],
+    "names": [],
+    "file": "confirm.css"
+}

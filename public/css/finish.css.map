@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,QAAQ,AAAC,CACP,SAAS,CAAE,IAAI,CACf,WAAW,CAAE,IAAI,CAClB",
+    "sources": [
+        "finish.scss"
+    ],
+    "names": [],
+    "file": "finish.css"
+}

@@ -109,10 +109,10 @@
               <a href="{{ url('/getparrotskinki') }}">クローリング近畿</a>
             </li>
             <li>
-              <a href="{{ url('/getParrotschugoku') }}">クローリング中国</a>
+              <a href="{{ url('/getparrotschugoku') }}">クローリング中国</a>
             </li>
             <li>
-              <a href="{{ url('/getParrotskyushu') }}">クローリング九州</a>
+              <a href="{{ url('/getparrotskyushu') }}">クローリング九州</a>
             </li>
             <li><a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">ログアウト</a>
               <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">

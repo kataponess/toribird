@@ -59,7 +59,8 @@ Route::group(['middleware' => ['auth', 'can:system-only']], function () {
   Route::get('getparrotskanto', 'GetParrotsController@getParrotsKanto');
   Route::get('getparrotschubu', 'GetParrotsController@getParrotsChubu');
   Route::get('getparrotskinki', 'GetParrotsController@getParrotsKinki');
-  Route::get('getParrotskyushu', 'GetParrotsController@getParrotsKyushu');
+  Route::get('getparrotschugoku', 'GetParrotsController@getParrotsChugoku');
+  Route::get('getparrotskyushu', 'GetParrotsController@getParrotsKyushu');
 
   // -------------------------
   // ----- ユーザー一覧 -----
