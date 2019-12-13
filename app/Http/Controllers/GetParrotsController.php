@@ -6,49 +6,8 @@ use Illuminate\Support\Facades\File;
 
 class GetParrotsController extends Controller
 {
-	private function findParrot($html, $pref_id, $zoo_name, $before_word, $after_word)
-	{
-		\App\Zooname::insert(['prefecture_id' => $pref_id, 'zooname' => $zoo_name]);
-		$parrot_types = ['インコ', 'オウム', 'ヨウム', 'バタン'];
-		$parrot_name = '';
-		foreach ($parrot_types as $parrot_type) {
-			$html_copy = $html;
-			for ($i = 0;; $i++) {
-				if (mb_strpos($html_copy, $parrot_type) === false) {
-					break;
-				}
-				//インコの名前
-				for ($j = -1; mb_substr($html_copy, mb_strpos($html_copy, $parrot_type) + $j, 1) != $before_word; $j--) {
-					$parrot_name = mb_substr($html_copy, mb_strpos($html_copy, $parrot_type) + $j, 1) . $parrot_name;
-				}
-				$parrot_name = $parrot_name . $parrot_type;
-				//画像パス
-				if (File::exists("storage/img/" . $parrot_name . ".jpg")) {
-					$imagePath = "storage/img/" . $parrot_name . ".jpg";
-				} else {
-					$imagePath = "storage/img/noimage.png";
-				}
-				if ($parrot_name == 'ヨウム') {
-					$this->insertParrotName($parrot_name);
-					$this->insertParrotDB($zoo_name, $parrot_name, $imagePath);
-					$this->insertOverview($parrot_name);
-				} else {
-					if (
-						$parrot_name != $parrot_type &&
-						preg_match("/^[ァ-ヾ]+$/u", $parrot_name)
-					) {
-						$this->insertParrotName($parrot_name);
-						$this->insertParrotDB($zoo_name, $parrot_name, $imagePath);
-						$this->insertOverview($parrot_name);
-					}
-				}
-				$parrot_name = '';
-				$html_copy = mb_substr($html_copy, mb_strpos($html_copy, $parrot_type));
-				$html_copy = mb_substr($html_copy, mb_strpos($html_copy, $after_word) + 1);
-			}
-		}
-	}
-	private function insertParrotName($parrot_name)
+
+	private function insertParrotNameDB($parrot_name)
 	{
 		if (!\App\Parrotname::where('parrotname', $parrot_name)->exists()) {
 			\App\Parrotname::insert([
@@ -56,6 +15,7 @@ class GetParrotsController extends Controller
 			]);
 		}
 	}
+
 	private function insertParrotDB($zoo_name, $parrot_name, $imagePath)
 	{
 		\App\Parrot::insert([
@@ -64,7 +24,8 @@ class GetParrotsController extends Controller
 			'path' => $imagePath,
 		]);
 	}
-	private function insertOverview($parrot_name)
+
+	private function insertOverviewDB($parrot_name)
 	{
 		if (!\App\Overview::where('parrotname', $parrot_name)->exists()) {
 			if ($html = @file_get_contents("https://ja.wikipedia.org/wiki/" . $parrot_name)) {
@@ -94,6 +55,51 @@ class GetParrotsController extends Controller
 			}
 		}
 	}
+
+	private function findParrot($html, $pref_id, $zoo_name, $before_word, $after_word)
+	{
+		\App\Zooname::insert(['prefecture_id' => $pref_id, 'zooname' => $zoo_name]);
+		$parrot_types = ['インコ', 'オウム', 'ヨウム', 'バタン'];
+		$parrot_name = '';
+		foreach ($parrot_types as $parrot_type) {
+			$html_copy = $html;
+			for ($i = 0;; $i++) {
+				if (mb_strpos($html_copy, $parrot_type) === false) {
+					break;
+				}
+				//インコの名前
+				for ($j = -1; mb_substr($html_copy, mb_strpos($html_copy, $parrot_type) + $j, 1) != $before_word; $j--) {
+					$parrot_name = mb_substr($html_copy, mb_strpos($html_copy, $parrot_type) + $j, 1) . $parrot_name;
+				}
+				$parrot_name = $parrot_name . $parrot_type;
+				//画像パス
+				if (File::exists("storage/img/" . $parrot_name . ".jpg")) {
+					$imagePath = "storage/img/" . $parrot_name . ".jpg";
+				} else {
+					$imagePath = "storage/img/noimage.png";
+				}
+				if ($parrot_name == 'ヨウム') {
+					$this->insertParrotNameDB($parrot_name);
+					$this->insertParrotDB($zoo_name, $parrot_name, $imagePath);
+					$this->insertOverviewDB($parrot_name);
+				} else {
+					if (
+						$parrot_name != $parrot_type &&
+						preg_match("/^[ァ-ヾ]+$/u", $parrot_name)
+					) {
+						$this->insertParrotNameDB($parrot_name);
+						$this->insertParrotDB($zoo_name, $parrot_name, $imagePath);
+						$this->insertOverviewDB($parrot_name);
+					}
+				}
+				$parrot_name = '';
+				$html_copy = mb_substr($html_copy, mb_strpos($html_copy, $parrot_type));
+				$html_copy = mb_substr($html_copy, mb_strpos($html_copy, $after_word) + 1);
+			}
+		}
+	}
+
+
 	public function getParrotsDelete()
 	{
 		// DB初期化
@@ -506,21 +512,21 @@ class GetParrotsController extends Controller
 		$this->findParrot($html, $pref_id, $zoo_name, $before_word, $after_word);
 		/*---------- 長崎バイオパーク ----------*/
 		$html = file_get_contents("http://www.biopark.co.jp/animals/birds/");
-		$pref_id = \App\Prefecture::where('prefecturename', '福岡県')->value('id');
+		$pref_id = \App\Prefecture::where('prefecturename', '長崎県')->value('id');
 		$zoo_name = '長崎バイオパーク';
 		$before_word = '"';
 		$after_word = 'box-base';
 		$this->findParrot($html, $pref_id, $zoo_name, $before_word, $after_word);
 		/*---------- 阿蘇カドリー・ドミニオン ----------*/
 		$html = file_get_contents("http://animalchain.site/zoo/211");
-		$pref_id = \App\Prefecture::where('prefecturename', '福岡県')->value('id');
+		$pref_id = \App\Prefecture::where('prefecturename', '熊本県')->value('id');
 		$zoo_name = '阿蘇カドリー・ドミニオン';
 		$before_word = '>';
 		$after_word = '</li>';
 		$this->findParrot($html, $pref_id, $zoo_name, $before_word, $after_word);
 		/*---------- 宮崎市フェニックス自然動物園 ----------*/
 		$html = file_get_contents("http://www.miyazaki-city-zoo.jp/zoo/");
-		$pref_id = \App\Prefecture::where('prefecturename', '福岡県')->value('id');
+		$pref_id = \App\Prefecture::where('prefecturename', '宮崎県')->value('id');
 		$zoo_name = '宮崎市フェニックス自然動物園';
 		$before_word = '>';
 		$after_word = 'highslide-caption';
@@ -528,7 +534,7 @@ class GetParrotsController extends Controller
 		/*---------- 鹿児島市平川動物公園 ----------*/
 		$html = file_get_contents("http://hirakawazoo.jp/zukan/category/bunrui/birds");
 		$html = mb_substr($html, mb_strpos($html, 'zukan-textfull'));
-		$pref_id = \App\Prefecture::where('prefecturename', '福岡県')->value('id');
+		$pref_id = \App\Prefecture::where('prefecturename', '鹿児島県')->value('id');
 		$zoo_name = '鹿児島市平川動物公園';
 		$before_word = '>';
 		$after_word = '</td>';
@@ -536,7 +542,7 @@ class GetParrotsController extends Controller
 		/*---------- ネオパークオキナワ ----------*/
 		$html = file_get_contents("https://www.itozu-zoo.jp/friends/");
 		$html = mb_substr($html, mb_strpos($html, '<div class="sc-navi">'));
-		$pref_id = \App\Prefecture::where('prefecturename', '福岡県')->value('id');
+		$pref_id = \App\Prefecture::where('prefecturename', '沖縄県')->value('id');
 		$zoo_name = 'ネオパークオキナワ';
 		$before_word = '>';
 		$after_word = '</a></div>';

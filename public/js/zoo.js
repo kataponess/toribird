@@ -15,62 +15,55 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 
-
 const selectPref = (obj) => {
 	const prefValue = obj.options[obj.selectedIndex].value;
 	const prefId = obj.options[obj.selectedIndex].id;
 	const zooId = document.getElementById("selectZoo");
-	const select = document.getElementsByClassName("select");
-	const result = document.getElementsByClassName("result");
-
+	const selects = document.querySelectorAll(".select");
+	const results = document.querySelectorAll(".result");
 	zooId.selectedIndex = "0";
 
-	if (prefValue == '0') {
-		for (let i = 0; i < select.length; i++) {
-			select[i].classList.remove("hide");
-		}
-	} else {
-		for (let i = 0; i < select.length; i++) {
-			if (select[i].classList.contains(prefId)) {
-				select[i].classList.remove("hide");
+	selects.forEach(select => {
+		if (prefValue == '0') {
+			select.classList.remove("hide");
+		} else {
+			if (select.classList.contains(prefId)) {
+				select.classList.remove("hide");
 			} else {
-				select[i].classList.add("hide");
+				select.classList.add("hide");
 			}
 		}
-	}
+	});
 
-	if (prefValue == '0') {
-		for (let i = 0; i < result.length; i++) {
-			result[i].classList.remove("hide");
-		}
-	} else {
-		for (let i = 0; i < result.length; i++) {
-			if (result[i].classList.contains(prefValue)) {
-				result[i].classList.remove("hide");
+	results.forEach(result => {
+		if (prefValue == '0') {
+			result.classList.remove("hide");
+		} else {
+			if (result.classList.contains(prefValue)) {
+				result.classList.remove("hide");
 			} else {
-				result[i].classList.add("hide");
+				result.classList.add("hide");
 			}
 		}
-	}
+	});
 }
 
 const selectZoo = (obj) => {
 	const prefValue = document.getElementById("selectPref").value;
 	const zooValue = obj.options[obj.selectedIndex].value;
-	const result = document.getElementsByClassName("result");
-	if (zooValue == '0') {
-		for (let i = 0; i < result.length; i++) {
-			if (result[i].classList.contains(prefValue)) {
-				result[i].classList.remove("hide");
+	const results = document.querySelectorAll(".result");
+
+	results.forEach(result => {
+		if (zooValue == '0') {
+			if (result.classList.contains(prefValue)) {
+				result.classList.remove("hide");
 			}
-		}
-	} else {
-		for (let i = 0; i < result.length; i++) {
-			if (result[i].id == zooValue) {
-				result[i].classList.remove("hide");
+		} else {
+			if (result.id == zooValue) {
+				result.classList.remove("hide");
 			} else {
-				result[i].classList.add("hide");
+				result.classList.add("hide");
 			}
 		}
-	}
+	});
 }
