@@ -1,6 +1,6 @@
 @extends('layouts.index_master')
 @section('stylesheet')
-<link rel="stylesheet" href="{{ asset('css/zoo.min.css') }}">
+<link rel="stylesheet" href="{{ asset('css/zoo.css') }}">
 @endsection
 @section('title', 'インコが見られる場所')
 @section('main')
@@ -9,8 +9,36 @@
 	<h2>動物園で見られるインコ・オウム</h2>
 
 	<!--------------------- select --------------------->
+	<div class="search-pc row">
 
-	<div class="select-area row">
+		<a class="waves-effect waves-light btn modal-trigger pref-triger" href="#prefModal">都道府県：検索</a>
+		<div id="prefModal" class="modal pref-modal">
+			<form action="" method="get" name="searchPrefForm" class="searchPrefForm">
+				@foreach($prefecturesTable as $prefectureTable)
+				<label>
+					<input type="checkbox" class="filled-in pref" name="pref" value="{{ $prefectureTable->prefecturename }}" data-pref="{{ $prefectureTable->prefecturename }}">
+					<span>{{ $prefectureTable->prefecturename }}[ {{ $prefectureTable->count }} ]</span>
+				</label>
+				@endforeach
+			</form>
+		</div>
+
+		<a class="waves-effect waves-light btn modal-trigger zooname-triger" href="#zoonameModal">動物園名：検索</a>
+		<div id="zoonameModal" class="modal zooname-modal">
+			<form action="" method="get" name="searchZoonameForm" class="searchZoonameForm">
+				@foreach($zoonamesTable as $zoonameTable)
+				<label>
+					<input type="checkbox" class="filled-in zooname" name="zooname" value="{{ $zoonameTable->zooname }}" data-pref="{{ $zoonameTable->prefecture->prefecturename }}" data-zooname="{{ $zoonameTable->zooname }}">
+
+					<span>{{ $zoonameTable->zooname }}( {{ $zoonameTable->prefecture->prefecturename }} )</span>
+				</label>
+				@endforeach
+			</form>
+		</div>
+
+	</div>
+
+	<div class="search-sp row">
 
 		<div class="dropdownlist col xl2 l3 m4 s10">
 			<label>都道府県選択</label>
@@ -48,9 +76,11 @@
 
 	<!--------------------- result --------------------->
 	<div class="row">
+
 		@foreach ($parrotsTable as $prefecture => $parrotTable)
 		@foreach ($parrotTable as $zooname => $parrots)
-		<div class="col xl3 l4 m6 s12 result {{ $prefecture }}" id="{{ $zooname }}">
+
+		<div class="col xl3 l4 m6 s12 result {{ $prefecture }}" id="{{ $zooname }}" data-pref="{{ $prefecture }}" data-zooname="{{ $zooname }}">
 			<ul class="zoo-name-outer z-depth-4">
 				<li>
 					<div class="zoo-name">

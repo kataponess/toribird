@@ -70,6 +70,10 @@ cite a {
 }
 
 /* -------------main------------- */
+.main {
+  min-height: 100vh;
+}
+
 .hide {
   display: none;
 }
@@ -104,6 +108,9 @@ h2 {
 .fa-angle-right {
   font-size: 55px;
   padding-top: 15px;
+  @include mq($sm) {
+    display: none;
+  }
 }
 
 .result {
@@ -182,8 +189,66 @@ p {
   transform: scale(1, 1);
 }
 
-@media (max-width: 576px) {
-  .fa-angle-right {
+// .collapsible {
+//   display: block;
+//   width: 90%;
+//   margin: 0 auto;
+//   @include mq($sm) {
+//     width: 98%;
+//   }
+// }
+
+// -------------------------
+// ----- 検索フォーム -----
+// -------------------------
+
+// ----- PC:検索 -----
+.search-pc {
+  @include mq($xl) {
     display: none;
+  }
+}
+
+.pref-triger {
+  margin: 10px;
+}
+
+.pref-modal {
+  padding: 10px;
+  .searchPrefForm {
+    label {
+      display: inline-block;
+      width: 130px;
+      span {
+        padding-left: 25px !important;
+      }
+    }
+  }
+}
+
+.zooname-triger {
+  margin: 10px;
+}
+
+.zooname-modal {
+  width: 90% !important;
+  padding: 10px;
+  .searchZoonameForm {
+    label {
+      display: inline-block;
+      width: 320px;
+      span {
+        padding-left: 25px !important;
+        font-size: 13px;
+      }
+    }
+  }
+}
+
+// ----- SP:検索 -----
+.search-sp {
+  display: none;
+  @include mq($xl) {
+    display: block;
   }
 }
